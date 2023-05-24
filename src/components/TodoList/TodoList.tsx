@@ -3,9 +3,15 @@ import { Todo } from '../../types/Todo';
 
 type TodoListType = {
   todos: Todo[];
-  handleTodo: (todo: Todo) => void;
+  handleTodo: (todo: Todo | null) => void;
+  selectedTodo: Todo | null;
 };
-export const TodoList: React.FC<TodoListType> = ({ todos, handleTodo }) => {
+
+export const TodoList: React.FC<TodoListType> = (
+  { todos, handleTodo, selectedTodo },
+) => {
+  // console.log(selectedTodo);
+
   return (
     <table className="table is-narrow is-fullwidth">
       <thead>
@@ -23,7 +29,11 @@ export const TodoList: React.FC<TodoListType> = ({ todos, handleTodo }) => {
 
       <tbody>
         {todos.map((todo) => (
-          <tr key={todo.id} data-cy="todo" className="">
+          <tr
+            key={todo.id}
+            data-cy="todo"
+            className={selectedTodo === todo ? 'has-background-info-light' : ''}
+          >
             <td className="is-vcentered">{todo.id}</td>
             <td className="is-vcentered">
               {todo.completed === true && (
@@ -51,7 +61,7 @@ export const TodoList: React.FC<TodoListType> = ({ todos, handleTodo }) => {
                 type="button"
               >
                 <span className="icon">
-                  <i className="far fa-eye" />
+                  <i className={`far ${selectedTodo === todo ? 'fa-eye-slash' : 'fa-eye'}`} />
                 </span>
               </button>
             </td>

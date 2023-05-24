@@ -66,10 +66,10 @@ export const App: React.FC = () => {
   };
 
   const handleTitleChange = ({ target } : React.ChangeEvent<HTMLInputElement>) => {
-    setTodoTitle(target.value);
+    setTodoTitle(target.value.toLowerCase());
     const filteredByType = getFilteredByType(todoFilterType);
 
-    const filtered = filteredByType.filter((todo) => todo.title.includes(target.value));
+    const filtered = filteredByType.filter((todo) => todo.title.toLowerCase().includes(target.value.toLowerCase()));
 
     setFilteredTodos(filtered);
   };
@@ -94,7 +94,7 @@ export const App: React.FC = () => {
               <Loader />
             ) : (
               <div className="block">
-                <TodoList todos={filteredTodos} handleTodo={handleTodo} />
+                <TodoList todos={filteredTodos} handleTodo={handleTodo} selectedTodo={selectedTodo} />
               </div>
             )}
           </div>
